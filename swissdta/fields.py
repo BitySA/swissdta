@@ -66,6 +66,7 @@ class Field(object):
             return (value if value is not None else '').rjust(self.length, self.fillchar)
         elif self.fillside == FillSide.RIGHT:
             return (value if value is not None else '').ljust(self.length, self.fillchar)
+        raise ValueError(f"Invalid fillside argument: {self.fillside}")
 
     def validate(self, value) -> List[str]:
         """Validate the value of a field.
@@ -252,7 +253,7 @@ class Amount(Field):
 
 class Currency(Field):
     """Field representing an ISO 4217 currency code."""
-    def __init__(self, length=3, *args, default: str = None, **kwargs):
+    def __init__(self, *args, length: int = 3, default: str = None, **kwargs):
         """Creates a new currency field.
 
         Args:
@@ -322,7 +323,7 @@ class Date(Field):
     DATE_FORMAT = '%y%m%d'
     NULL_DATE = '000000'
 
-    def __init__(self, length=6, *args, default: date = None, **kwargs):
+    def __init__(self, *args, length: int = 6, default: date = None, **kwargs):
         """Creates a new date field.
 
         The length should usually remain at 6 and should not be less.
