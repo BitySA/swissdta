@@ -218,7 +218,7 @@ class DTARecord836(DTARecord):  # pylint: disable=too-many-instance-attributes
         if self.header.transaction_type != '836':
             self.header.add_error('transaction_type', "INVALID: Transaction type must be TA 836.")
 
-        if self.header.payment_type not in {payment_type.value for payment_type in PaymentType}:
+        if self.header.payment_type not in {str(payment_type.value) for payment_type in PaymentType}:
             self.header.add_error('payment_type', "INVALID: Payment type must be 0 or 1 TA 836.")
 
         if not remove_whitespace(self.reference):
